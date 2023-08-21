@@ -17,9 +17,6 @@ const applyText = (canvas, text) => {
 	return context.font;
 };
 
-
-
-
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -27,10 +24,11 @@ module.exports = {
 		.setName('welcome')
 		.setDescription('Sends Welcome Embed as a Test'),
 	async execute(interaction) {
-    const canvas = createCanvas(700, 250);
+
+const canvas = createCanvas(700, 250);
 const context = canvas.getContext('2d');
 
-const background = await readFile('./Welcome_banner.jpg');
+const background = await readFile('./Dusk_Blvd.png');
 const backgroundImage = new Image();
 backgroundImage.src = background;
 context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
@@ -40,6 +38,8 @@ context.lineWidth = 5;
 context.strokeStyle = 'rgba(0, 8, 125, 1)';
 context.strokeRect(0, 0, canvas.width, canvas.height);
 
+// Opacity
+context.fillStyle = 'rgba(0, 0, 0, 0.15)';context.fillRect(0, 0, canvas.width, canvas.height)
 // Welcome
 context.font = 'italic 54px Gabriola';
 context.strokeStyle = 'rgba(0, 0, 0, 0.5)'
@@ -72,24 +72,22 @@ const attachment = new AttachmentBuilder(canvas.toBuffer('image/png'), { name: '
 		// interaction.member is the GuildMember object, which represents the user in the specific guild
     const exampleEmbed = new EmbedBuilder()
     .setColor(0x0099FF)
-    .setTitle('Some title')
-    .setURL('https://discord.js.org/')
-    .setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
+    .setTitle(`Welcome to ${interaction.guild.name}`)
+    .setAuthor({ name: `${interaction.user.displayName} (${interaction.user.id})`, iconURL: `${interaction.user.displayAvatarURL()}`})
     .setDescription(
       `We ask that you please: \n 
       \u2022 Read and react to the <#1136445872201269409> \n
-      \u2022 Grab an AGE role from <#1136445756732100738> \n
+      \u2022 Grab an **AGE** role from <#1136445756732100738> \n
       \u2022 Tell us a little about yourself in <#1136445710619914372> \n\n
       If you need assistance please ping <@&1136443489199067319>.
       `
   
       )
-    .setThumbnail(`https://cdn.discordapp.com/avatars/${interaction.member.id}/${interaction.member.avatar}.jpg`)
-    .setImage('https://cdn.discordapp.com/attachments/1136445872201269409/1143252250706329660/Dusk_Blvd..jpg')
+    .setThumbnail(interaction.user.displayAvatarURL())
+    .setImage('attachment://profile-image.png')
     .setTimestamp()
-    .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
+    .setFooter({ text: `${interaction.guild.name}`, iconURL: `${interaction.guild.iconURL()}` });
   
-    console.log(interaction.member)
-    await interaction.reply({embeds: [exampleEmbed]});
+    await interaction.reply({embeds: [exampleEmbed], files: [attachment]});
 	},
 };
