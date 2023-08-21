@@ -20,17 +20,7 @@ module.exports = {
 	name: Events.GuildMemberAdd,
 	async execute(member) {
     console.log([member.id, member.displayName])
-/*     const { user, guild } = member;
-    
-    const welcomeMessage = `Welcome ${member.id} to the guild!`
-
-    const welcomeEmbed = new EmbedBuilder()
-    .setTitle("**New Member!**")
-    .setDescription(welcomeMessage)
-    .setImage('https://i.kym-cdn.com/entries/icons/mobile/000/026/489/crying.jpg')
-    .setFields({name: 'fuck', value: 'awsedfrjniklop[ghsrtopdfihjsdrftyiklop;h'})
-    .setColor(0x037821)
-    .setTimestamp();
+/*
      */
     
     const canvas = createCanvas(700, 250);
@@ -76,5 +66,16 @@ module.exports = {
 		const attachment = new AttachmentBuilder(canvas.toBuffer('image/png'), { name: 'profile-image.png' });
     const welcomeChannel = member.guild.channels.cache.get('1136445147547185252');
     welcomeChannel.send({files: [attachment]})
+
+    const { user, guild } = member;
+    
+/* 
+    const welcomeEmbed = new EmbedBuilder()
+    .setTitle("**New Member!**")
+    .setDescription(welcomeMessage)
+    .setImage('https://i.kym-cdn.com/entries/icons/mobile/000/026/489/crying.jpg')
+    .setFields({name: 'fuck', value: 'awsedfrjniklop[ghsrtopdfihjsdrftyiklop;h'})
+    .setColor(0x037821)
+    .setTimestamp(); */
   },
 };
