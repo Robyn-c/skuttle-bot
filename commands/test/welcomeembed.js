@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { Events, AttachmentBuilder } = require('discord.js');
+const { AttachmentBuilder } = require('discord.js');
 const { createCanvas, Image } = require('@napi-rs/canvas');
 const { readFile } = require('fs/promises');
 const { request } = require('undici');
@@ -7,7 +7,7 @@ const { request } = require('undici');
 const applyText = (canvas, text) => {
 	const context = canvas.getContext('2d');
 	// Declare a base size of the font
-	let fontSize = 70;
+	let fontSize = 60;
 	do {
 		// Assign the font to the context and decrement it so it can be measured again
 		context.font = `${fontSize -= 10}px Calibri`;
@@ -38,22 +38,24 @@ context.lineWidth = 5;
 context.strokeStyle = 'rgba(0, 8, 125, 1)';
 context.strokeRect(0, 0, canvas.width, canvas.height);
 
-// Opacity
-context.fillStyle = 'rgba(0, 0, 0, 0.15)';context.fillRect(0, 0, canvas.width, canvas.height)
+/* // Opacity
+context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+context.fillRect(250, 25, canvas.width / 1.8, canvas.height - 50)
+ */
 // Welcome
-context.font = 'italic 54px Gabriola';
+context.font = 'italic 60px Gabriola';
 context.strokeStyle = 'rgba(0, 0, 0, 0.5)'
-context.strokeText('Welcome!', canvas.width / 2, canvas.height / 3);
+context.strokeText('Welcome!', canvas.width / 2.5, canvas.height / 2.5);
 context.fillStyle = '#ffffff';
-context.fillText('Welcome!', canvas.width / 2, canvas.height / 3);
+context.fillText('Welcome!', canvas.width / 2.5, canvas.height / 2.5);
 
 
 // Display Name
 context.strokeStyle = 'rgba(0, 0, 0, 0.5)'
 context.font = applyText(canvas, interaction.member.displayName);
-context.strokeText(interaction.member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+context.strokeText(interaction.member.displayName, canvas.width / 2.5, canvas.height / 1.6);
 context.fillStyle = '#ffffff';
-context.fillText(interaction.member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+context.fillText(interaction.member.displayName, canvas.width / 2.5, canvas.height / 1.6);
 
 // Avatar Img
 context.beginPath();
@@ -75,13 +77,7 @@ const attachment = new AttachmentBuilder(canvas.toBuffer('image/png'), { name: '
     .setTitle(`Welcome to ${interaction.guild.name}`)
     .setAuthor({ name: `${interaction.user.displayName} (${interaction.user.id})`, iconURL: `${interaction.user.displayAvatarURL()}`})
     .setDescription(
-      `We ask that you please: \n 
-      \u2022 Read and react to the <#1136445872201269409> \n
-      \u2022 Grab an **AGE** role from <#1136445756732100738> \n
-      \u2022 Tell us a little about yourself in <#1136445710619914372> \n\n
-      If you need assistance please ping <@&1136443489199067319>.
-      `
-  
+      `We ask that you please:\n\n\u2022 Read and react to the <#1136445872201269409>\n\u2022 Grab an **AGE** role from <#1136445756732100738> \n\u2022Tell us a little about yourself in <#1136445710619914372>\n\nIf you need assistance please ping <@&1136443489199067319>.`
       )
     .setThumbnail(interaction.user.displayAvatarURL())
     .setImage('attachment://profile-image.png')
