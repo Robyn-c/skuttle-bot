@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { mongoose } = require('mongoose');
 
 require('dotenv').config()
 
@@ -15,6 +16,7 @@ const client = new Client({
 
 client.commands = new Collection();
 
+// Commands
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -32,6 +34,7 @@ for (const folder of commandFolders) {
 	}
 }
 
+// Events
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
